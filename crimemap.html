@@ -68,12 +68,13 @@
 			@media (max-width: 900px) and (min-width:600px){
 				#slider {width: 80%;}
 				#control-wrap {width: 90%;}
-				#load-button {margin: 40px 0 0 10px;
+				#load-button {margin: 40px 0 0 10px;}
 			}
 
 			@media (max-width: 600px){
 				#control-wrap {width: 95%;}
 				#load-button {margin: 5px 0;}
+				#slider {width:90%;}
 			}
 
 		#load-button {
@@ -134,7 +135,14 @@ var controlSlider;
 
     map = L.map('map').setView([46.591753, -120.521270], 13);
 	map.setZoom(widthVars().zlvl)
-	var baseLayer = L.tileLayer.provider('MapQuestOpen.OSM').addTo(map);
+	var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	    maxZoom: 18,
+	    id: 'willmcdonald.oiiecmb6',
+	    accessToken: 'pk.eyJ1Ijoid2lsbG1jZG9uYWxkIiwiYSI6ImlsaC04RVkifQ.Mr4JMXV1BHdDaR_wAOfmdg'
+	}).addTo(map);
+
+	//var baseLayer = L.tileLayer.provider('MapQuestOpen.OSM').addTo(map);
 
 
 
