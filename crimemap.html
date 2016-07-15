@@ -1,31 +1,13 @@
+
 <!DOCTYPE=html>
+<html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-
-	<link rel="stylesheet" href="http://yh-r.com/scripts/lib/bootstrap-3.3.5-dist/css/bootstrap.css"/>
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<link href="jquery-ui/jquery-ui-css" rel="stylesheet" />
-
-	<link rel="stylesheet" href="jQRangeSlider/css/iThing.css" />
-	<script src="jquery-ui/jquery-ui.js"></script>
-	<script src="jQRangeSlider/jQDateRangeSlider-withRuler-min.js"></script>
-
-	<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.css" />
-	<script src="https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.js"></script>
-
-
-
-	<style type="text/css">
-
-
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><link rel="stylesheet" href="http://yh-r.com/scripts/lib/jQRangeSlider/css/iThing.css">
+<script src="http://yh-r.com/scripts/lib/jquery-ui/jquery-ui.js"></script><script src="http://yh-r.com/scripts/lib/jQRangeSlider/jQDateRangeSlider-withRuler-min.js"></script><link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.css">
+<script src="https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.js"></script><style type="text/css">
 		body {font-family: helvetica, sans-serif;}
-
-		#map {height:100%; width: 100%;}
-
+		#map {height:600px; width: 100%;}
 		.circle {width:10px; height:10px; border-radius: 50%;display:inline-block;}
 		#vi {background-color: #FF0000;}
 		#pr {background-color: #FFFF00;}
@@ -35,58 +17,48 @@
 		#sc {background-color: #FF00FF;}
 		#cv {background-color: #006837;}
 		#ot {background-color: #BDCCD4;}
-
 		#days-slider-wrap {position: absolute; bottom: 40px; left: 40px;}
-
-		/*.ui-rangeSlider-label-value{font-size: 13px !important;}*/
+		/*.ui-rangeSlider-label-value{font-size: 11px !important;}*/
 		.ui-rangeSlider-container, {background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #999999 0%, #666666 100%) repeat scroll 0 0 !important;}
-
-
 		#control-wrap {
 			position: absolute;
-			left: 20px;
+			left: 30px;
 			bottom: 40px;
 			max-width:500px;
 			}
-
 		#slider {
 			float:left;
 			width:100%;
 			z-index: 9999;
 			}
-
 			@media (min-width: 960px){
-
 				#control-wrap { width: 50%;}
 			}
-
 			@media (max-width: 960px) and (min-width:768px){
 				#control-wrap {width: 50%;}
 				}
-
 			@media (max-width: 768px){
-				#control-wrap {right:20px;}
+				#control-wrap {right:30px;}
 			}
 
-		#load-button {
-			float: left;
-
-			height: 30px;
+                img#loading {
+				position: absolute;
+				right: 45%;
+				bottom: 45%;
+				left: 45%;
+				top:45%;
+				width: 7%;
+				z-index: 9999;
 			}
-
-
-
-
 	</style>
-
 </head>
-
 <body>
-
-	<div id="map" class="sidebar-map"></div>
-<div id="control-wrap">
+<div id="mapwrap">
+        <div id="map" class="sidebar-map"></div>
+        <img id="loading" src="http://yh-r.com/scripts/img/loading.gif"><div id="control-wrap">
 	<div id="slider"></div>
 	<!--<a class="btn btn-primary" id="load-button" href="#" role="button">Load Calls</a>-->
+</div>
 </div>
 <!--	<div id="days-slider-wrap">
 	<label for="days-slider">Days</label>
@@ -95,15 +67,12 @@
 
 
 <script>
-
 //globals for debug
-var map;
-var sidebar;
-var featureGroups;
-var controlSlider;
-
+//var map;
+//var sidebar;
+//var featureGroups;
+//var controlSlider;
  $(document).ready(function() {
-
 	function widthVars(){
 		var configOpts = {}
 		var zlvl
@@ -116,67 +85,48 @@ var controlSlider;
 		}
 		return configOpts
 	}
-
-
-
-    map = L.map('map').setView([46.591753, -120.521270], 13);
+    map = L.map('map', {maxZoom: 17}).setView([46.591753, -120.550066 ], 13);
 	map.setZoom(widthVars().zlvl)
 	var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA, Imagery &copy; <a href="http://mapbox.com">Mapbox',
 	    maxZoom: 18,
 	    id: 'willmcdonald.oiiecmb6',
 	    accessToken: 'pk.eyJ1Ijoid2lsbG1jZG9uYWxkIiwiYSI6ImlsaC04RVkifQ.Mr4JMXV1BHdDaR_wAOfmdg'
 	}).addTo(map);
-
 	//var baseLayer = L.tileLayer.provider('MapQuestOpen.OSM').addTo(map);
-
-
-
 	function buildfeatureGroups(){
 		var groupNames = ["SC", "PR", "OT", "DR", "CV", "DM", "TR", "VI"]
 		//var groupNames = ["JV", "AN", "SC", "PR", "OT", "NU", "DR", "AL", "CV", "AX", "WC", "DM", "TR", "VI", "TH", "NT", "MH"]
 		//var mcg = L.markerClusterGroup()
-
-
 		featureGroups = {}
 		for (i=0;i<groupNames.length;i++){
 			featureGroups[groupNames[i]] = new L.featureGroup();
 		}
-
 		map.addLayer(featureGroups.VI)
 		map.addLayer(featureGroups.PR)
-
 		var incidentLayers = {
-					"<div class='circle' id='vi'></div> Violent": featureGroups.VI,
-					"<div class='circle' id='pr'></div> Property": featureGroups.PR,
-					"<div class='circle' id='dr'></div> Drugs": featureGroups.DR,
-					"<div class='circle' id='dm'></div> Domestic": featureGroups.DM,
-					"<div class='circle' id='tr'></div> Traffic": featureGroups.TR,
-					"<div class='circle' id='sc'></div> Suspicious": featureGroups.SC,
-					"<div class='circle' id='cv'></div> Civil": featureGroups.CV,
-					"<div class='circle' id='ot'></div> Other": featureGroups.OT
+					"<img src='http://yh-r.com/scripts/img/call_icons/vi.png'/>Violent": featureGroups.VI,
+					"<img src='http://yh-r.com/scripts/img/call_icons/pr.png'/>Property": featureGroups.PR,
+					"<img src='http://yh-r.com/scripts/img/call_icons/dr.png'/>Drugs": featureGroups.DR,
+					"<img src='http://yh-r.com/scripts/img/call_icons/dm.png'/>Domestic": featureGroups.DM,
+					"<img src='http://yh-r.com/scripts/img/call_icons/tr.png'/>Traffic": featureGroups.TR,
+					"<img src='http://yh-r.com/scripts/img/call_icons/sc.png'/>Suspicious": featureGroups.SC,
+					"<img src='http://yh-r.com/scripts/img/call_icons/cv.png'/>Civil": featureGroups.CV,
+					"<img src='http://yh-r.com/scripts/img/call_icons/ot.png'/>Other": featureGroups.OT
 				};
-
 		var layerController = L.control.layers(null, incidentLayers, {collapsed: false});
 				layerController.addTo(map);
-
-
-
 		//mcg.addTo(map)
-
 		/*var baseLayers = {
 				"Streets": baseLayer
 			}*/
-
 			//if (widthVars().clp){
 					//$(".leaflet-control-layers").addClass("leaflet-control-layers-expanded")
 				//}
-
 	};
-
-
 	function loadIncidents(sd, ed){
-		var serverBase = "http://127.0.0.1:8000/crime/"
+                $("#loading").show();
+		var serverBase = "http://projects.yakimaherald.com/crime/"
 		var urlCrime = serverBase + sd + "/" + ed + "/"
 		$.ajax({
 			dataType: "jsonp",
@@ -184,11 +134,9 @@ var controlSlider;
 			success: addIncidents
 		});
 	};/*end loadIncidents function*/
-
 	function addIncidents(data){
-
-		//var markers = L.markerClusterGroup();
-
+		$("#loading").hide();
+                //var markers = L.markerClusterGroup();
 		L.geoJson(data, {
 				pointToLayer: function (feature, latlng){
 							return L.circleMarker(latlng)
@@ -196,17 +144,13 @@ var controlSlider;
 				style: incidentStyle,
 				onEachFeature: onEachFeature
 			})
-
 		function onEachFeature(feature, featureLayer){
-
 			var incidentType = feature.properties.nature
 			var incidentLocation = feature.properties.address
 			var incidentDate = new Date(feature.properties.calldatetime)
-
 			var incidentDateS = incidentDate.toLocaleDateString()
 			var incidentDateT = incidentDate.toLocaleTimeString()
-			featureLayer.bindPopup("<b>" + feature.properties.nature + "</b><br/>" + feature.properties.address + "<br/>" + incidentDateS + "<br/>" + incidentDateT) //(incidentDateMonth + 1) + "/" + incidentDateDay)
-
+			featureLayer.bindPopup("<b>" + feature.properties.nature + "<br/>" + feature.properties.address + "<br/>" + incidentDateS + "<br/>" + incidentDateT) //(incidentDateMonth + 1) + "/" + incidentDateDay)
 			var cg = feature.properties.callgroup
 			var tempNamespace = {cg:feature.properties.callgroup}
 			var x = tempNamespace.cg
@@ -215,9 +159,8 @@ var controlSlider;
 				}
 			//markers.addLayer(featureLayer)
 			}
-
 		function incidentStyle(feature) {
-				var groupNames = {"VI":"#FF0000", "PR":"#FFFF00", "DR":"#00FF00", "DM":"#00FFFF", "TR":"#0000FF", "SC":"#FF00FF", "CV":"#006837", "OT":"#BDCCD4"}
+				var groupNames = {"VI":"#FF0000", "PR":"#FFFF00", "DR":"#8CC63F", "DM":"#00FFFF", "TR":"#0000FF", "SC":"#FF931E", "CV":"#006837", "OT":"#BDCCD4"}
 				/*var mapZoom = map.getZoom();
 				var setRadius = function(){
 					if (mapZoom < 14){
@@ -228,23 +171,18 @@ var controlSlider;
 						}
 					else {return 8}
 				}*/
-
 				//console.log(mapZoom, setRadius)
 				return {radius:6, color: '#999999', weight: 1, fillOpacity:1, fillColor:groupNames[feature.properties.callgroup]}
 				}
 		//map.addLayer(markers)
 		}
-
-
 	function buildDateRange(){
 			var tn = new Date();
 			var y = tn.getFullYear(), m = tn.getMonth(), d = tn.getDate();
 			var fd = new Date(y, m, d), bd = new Date(y, m - 1, d), db = new Date(y, m, d - 8), de = new Date(y, m, d - 1);
 			return {min: bd, max: fd, db: db, de:de}
 	};
-
 	var months = {1:"Jan", 2:"Feb", 3:"Mar", 4:"Apr", 5:"May", 6:"Jun", 7:"Jul", 8:"Aug", 9:"Sept", 10:"Oct", 11:"Nov", 12:"Dec"};
-
 	 controlSlider = $("#slider").dateRangeSlider({
 		defaultValues:
 			{
@@ -260,15 +198,9 @@ var controlSlider;
 					var days = val.getDate(),
 					month = val.getMonth() + 1,
 					year = val.getFullYear();
-					return months[month] + " " + days;
-				},
-		range: {
-				min: {days: 1},
-				max: {days: 7}
-			}
+					return month + "/" + days;
+				}
 		});
-
-
 	function getDateValues(){
 		var dateValues = $("#slider").dateRangeSlider("values")
 		//console.log(dateValues.min.toString());
@@ -280,8 +212,6 @@ var controlSlider;
 		if (minDate < 10){minDate = "0" + minDate.toString()}
 		else {minDate = minDate.toString()};
 		var minString = minYear + minMonth + minDate
-
-
 		var maxYear = dateValues.max.getFullYear().toString();
 		var maxMonth = dateValues.max.getMonth() + 1
 		if (maxMonth < 10){maxMonth = "0" + maxMonth}
@@ -289,58 +219,31 @@ var controlSlider;
 		var maxDate = dateValues.max.getDate()
 		if (maxDate < 10){maxDate = "0" + maxDate.toString()}
 		else {maxDate = maxDate.toString()};
-
 		var maxString = maxYear + maxMonth + maxDate
-
 		return {start: minString, end:maxString }
-
 	};
-
-
 		function onFire(){
+
 			console.log(featureGroups)
 			if (featureGroups){
 				//mcg = null
 				for (var lg in featureGroups){
 					console.log(lg, featureGroups[lg])
-
 					featureGroups[lg].clearLayers();
 				}
 			} else {buildfeatureGroups()}
-
-
-
-
-
 			//featureGroups = {}
 			console.log(featureGroups)
 			var queryDates = getDateValues();
 			console.log(queryDates)
 			loadIncidents(queryDates.start, queryDates.end)
 
-
-
-
-
-
-
-
 		}
-
 		onFire();
-
 		$("#slider").on('userValuesChanged', onFire)
-
 		//map.on("zoomend", onFire)
-
 		//$("#load-button").click(onFire)
-
 })//end document ready function
-
-
 </script>
-
-
-
-
 </body>
+</html>
