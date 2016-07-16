@@ -86,6 +86,19 @@
 		return configOpts
 	}
     map = L.map('map', {maxZoom: 17}).setView([46.591753, -120.550066 ], 13);
+    map.scrollWheelZoom.disable();
+
+	map.on('mouseover', function() {
+	zoomTimer = setTimeout(function(){
+		map.scrollWheelZoom.enable();
+	}, 2000);
+	});
+
+	map.on('mouseout', function() {
+	clearTimeout(zoomTimer);
+	map.scrollWheelZoom.disable();
+	});
+	
 	map.setZoom(widthVars().zlvl)
 	var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA, Imagery &copy; <a href="http://mapbox.com">Mapbox',
