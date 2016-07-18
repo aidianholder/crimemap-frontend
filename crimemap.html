@@ -179,7 +179,7 @@
 	function buildDateRange(){
 			var tn = new Date();
 			var y = tn.getFullYear(), m = tn.getMonth(), d = tn.getDate();
-			var fd = new Date(y, m, d), bd = new Date(y, m - 1, d), db = new Date(y, m, d - 8), de = new Date(y, m, d - 1);
+			var fd = new Date(y, m, d - 1), bd = new Date(y, m - 1, d - 1), db = new Date(y, m, d - 8), de = new Date(y, m, d - 1);
 			return {min: bd, max: fd, db: db, de:de}
 	};
 	var months = {1:"Jan", 2:"Feb", 3:"Mar", 4:"Apr", 5:"May", 6:"Jun", 7:"Jul", 8:"Aug", 9:"Sept", 10:"Oct", 11:"Nov", 12:"Dec"};
