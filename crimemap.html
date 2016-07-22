@@ -215,26 +215,26 @@
 				}
 		});
 	function getDateValues(){
-		var dateValues = $("#slider").dateRangeSlider("values")
-		//console.log(dateValues.min.toString());
-		var minYear = dateValues.min.getFullYear().toString()
-		var minMonth = dateValues.min.getMonth() + 1
-		if (minMonth < 10){minMonth = "0" + minMonth.toString()}
-		else {minMonth = minMonth.toString()};
-		var minDate = dateValues.min.getDate()
-		if (minDate < 10){minDate = "0" + minDate.toString()}
-		else {minDate = minDate.toString()};
-		var minString = minYear + minMonth + minDate
-		var maxYear = dateValues.max.getFullYear().toString();
-		var maxMonth = dateValues.max.getMonth() + 1
-		if (maxMonth < 10){maxMonth = "0" + maxMonth}
-		else {maxMonth = maxMonth.toString()};
-		var maxDate = dateValues.max.getDate()
-		if (maxDate < 10){maxDate = "0" + maxDate.toString()}
-		else {maxDate = maxDate.toString()};
-		var maxString = maxYear + maxMonth + maxDate
-		return {start: minString, end:maxString }
-	};
+        var dateValues = $("#slider").dateRangeSlider("values")
+        //console.log(dateValues.min.toString());
+        var minYear = dateValues.min.getFullYear().toString()
+        var minMonth = dateValues.min.getMonth() + 1
+        if (minMonth < 10){minMonth = "0" + minMonth.toString()}
+        else {minMonth = minMonth.toString()};
+        var minDate = dateValues.min.getDate()
+        if (minDate < 10){minDate = "0" + minDate.toString()}
+        else {minDate = minDate.toString()};
+        var minString = minYear + minMonth + minDate
+        var maxYear = dateValues.max.getFullYear().toString();
+        var maxMonth = dateValues.max.getMonth() + 1
+        if (maxMonth < 10){maxMonth = "0" + maxMonth}
+        else {maxMonth = maxMonth.toString()};
+        var maxDate = dateValues.max.getDate()
+        if (maxDate < 10){maxDate = "0" + (maxDate +1).toString()}
+        else {maxDate = (maxDate+1).toString()};
+        var maxString = maxYear + maxMonth + maxDate
+        return {start: minString, end:maxString }
+    };
 		function onFire(){
 
 			console.log(featureGroups)
