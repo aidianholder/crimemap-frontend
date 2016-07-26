@@ -86,6 +86,19 @@
 		return configOpts
 	}
     map = L.map('map', {maxZoom: 17}).setView([46.591753, -120.550066 ], 13);
+    map.scrollWheelZoom.disable();
+
+	map.on('mouseover', function() {
+	zoomTimer = setTimeout(function(){
+		map.scrollWheelZoom.enable();
+	}, 2000);
+	});
+
+	map.on('mouseout', function() {
+	clearTimeout(zoomTimer);
+	map.scrollWheelZoom.disable();
+	});
+	
 	map.setZoom(widthVars().zlvl)
 	var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA, Imagery &copy; <a href="http://mapbox.com">Mapbox',
@@ -202,26 +215,26 @@
 				}
 		});
 	function getDateValues(){
-		var dateValues = $("#slider").dateRangeSlider("values")
-		//console.log(dateValues.min.toString());
-		var minYear = dateValues.min.getFullYear().toString()
-		var minMonth = dateValues.min.getMonth() + 1
-		if (minMonth < 10){minMonth = "0" + minMonth.toString()}
-		else {minMonth = minMonth.toString()};
-		var minDate = dateValues.min.getDate()
-		if (minDate < 10){minDate = "0" + minDate.toString()}
-		else {minDate = minDate.toString()};
-		var minString = minYear + minMonth + minDate
-		var maxYear = dateValues.max.getFullYear().toString();
-		var maxMonth = dateValues.max.getMonth() + 1
-		if (maxMonth < 10){maxMonth = "0" + maxMonth}
-		else {maxMonth = maxMonth.toString()};
-		var maxDate = dateValues.max.getDate()
-		if (maxDate < 10){maxDate = "0" + maxDate.toString()}
-		else {maxDate = maxDate.toString()};
-		var maxString = maxYear + maxMonth + maxDate
-		return {start: minString, end:maxString }
-	};
+        var dateValues = $("#slider").dateRangeSlider("values")
+        //console.log(dateValues.min.toString());
+        var minYear = dateValues.min.getFullYear().toString()
+        var minMonth = dateValues.min.getMonth() + 1
+        if (minMonth < 10){minMonth = "0" + minMonth.toString()}
+        else {minMonth = minMonth.toString()};
+        var minDate = dateValues.min.getDate()
+        if (minDate < 10){minDate = "0" + minDate.toString()}
+        else {minDate = minDate.toString()};
+        var minString = minYear + minMonth + minDate
+        var maxYear = dateValues.max.getFullYear().toString();
+        var maxMonth = dateValues.max.getMonth() + 1
+        if (maxMonth < 10){maxMonth = "0" + maxMonth}
+        else {maxMonth = maxMonth.toString()};
+        var maxDate = dateValues.max.getDate()
+        if (maxDate < 10){maxDate = "0" + (maxDate +1).toString()}
+        else {maxDate = (maxDate+1).toString()};
+        var maxString = maxYear + maxMonth + maxDate
+        return {start: minString, end:maxString }
+    };
 		function onFire(){
 
 			console.log(featureGroups)
